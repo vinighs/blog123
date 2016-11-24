@@ -1,3 +1,18 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'pages/contact'
+
+  mount Ckeditor::Engine => '/ckeditor'
+  devise_for :users, controllers: { registrations: "registrations"}
+resources :posts do
+	resources :comments
+end
+	
+
+root "posts#index"
+
+get '/about', to: 'pages#about'
+
+
+
 end

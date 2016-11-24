@@ -2,13 +2,83 @@
 <html>
   <head>
     <title>Blog</title>
+  
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'true' %>
+    <%= stylesheet_link_tag 'application', 'http://fonts.googleapis.com/css?family=Raleway:400,700' %>
+    <link href="https://fonts.googleapis.com/css?family=Prata" rel="stylesheet"> 
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'true' %>
+     
   </head>
+  <body>  
+<div class="nav-side-menu">
+  <div class="brand">
+                      <%= link_to root_path do %>
+                      <%= image_tag "logo.png" %>
+                      <% end %>
+                      </div>
+<div class="brand">Cil van den Brink </div><br>
 
-  <body>
-    <%= yield %>
+
+                    <% if user_signed_in? %>
+                      <div class="optin">
+                        <%= link_to "New Post", new_post_path, :class => "button" %>
+                        <%= link_to "Log Out", destroy_user_session_path, :class => "button", method: :delete %>﻿
+                      </div>
+                    <% end %>
+<i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+<div class="menu-list">
+<ul id="menu-content" class="menu-content collapse out">
+
+
+<label class="category" >Website</label>
+<li ><%= link_to "Blog", root_path %></li>
+<li ><%= link_to "About", about_path %></li>
+
+
+<label class="category">Social</label>
+<li ><a href="https://www.linkedin.com/in/cilvandenbrink">LinkedIn</a></li>
+<li ><a href="https://www.instagram.com/meiramsterdam/">Instagram</a></li>
+<li ><a href="hhttps://www.facebook.com/systeempraktijk">Facebook</a></li>
+<li ><a href="mailto:systeempraktijk@outlook.com">Email</a></li>
+</ul>
+
+                    <div id="footer" id="menu-content" class="menu-content collapse out" >
+                        <p><strong>Systeempraktijk Amsterdam: </strong><br>
+                          'De Pijp': Therese Schwartzestraat 11c, 1073 JH<br> Amsterdam,<strong>06-26810240</strong></p><br>
+                        <p><strong>Systeempraktijk Lelystad centrum:</strong><br>
+                         Reaalhof 31d , 8232 VW Lelystad,<strong><br>06-26810240</strong></p><br>
+                            <% if !user_signed_in? %>
+                            <p ><%= link_to "Admin Login", new_user_session_path%>
+                            <% end %>
+                    </div>
+</div> 
+</div>
+
+                <div class="container" id="main">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div>
+                        <% if current_page?(root_path) %>
+                        <%= link_to "All Posts", root_path %>
+                        <% elsif current_page?(about_path) %>
+                        <p>About</p>
+                        <% else %>
+                        <%= link_to "Back to All Posts", root_path %>
+                        <% end %>
+
+                        <% flash.each do |name, msg| %>
+                        <%= content_tag(:div, msg, class: "alert") %>
+                        <% end %>
+                      </div>
+        
+      <%= yield %>  
+      
+                    
+</div>
+</div>
+</div>
+
+    
   </body>
 </html>
